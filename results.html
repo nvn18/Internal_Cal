@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: azure;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    @keyframes fallPaper {
+    0% {
+      transform: translateY(-100vh) rotate(0deg);
+    }
+    
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+    }
+  }
+
+  .falling-paper {
+    position: absolute;
+    width: 20px;
+    height: 50px;
+    background-image:linear-gradient(red,yellow) ;
+    clip-path: polygon(0% 10%, 100% 0%, 50% 100%);
+    
+    animation: fallPaper 4s linear infinite 0.2s;
+  }
+
+
+    #results-container {
+      background-color: #f4f4f4;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(144, 238, 144, 0.8), 0 0 10px rgba(255, 182, 193, 0.8);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 3;
+    }
+
+    footer p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="results-container">
+  <h2>Final Results</h2>
+
+  <table id="results-table">
+    <!-- Results will be dynamically inserted here using JavaScript -->
+  </table>
+</div>
+
+<script>
+  // Retrieve subject marks from localStorage
+  const subjectMarks = JSON.parse(localStorage.getItem('subjectMarks'));
+
+  // Display results in the table
+  const resultsTable = document.getElementById('results-table');
+  resultsTable.innerHTML = '<tr><th>Subject</th><th>Total Score</th></tr>';
+
+  for (let i = 0; i < subjectMarks.length; i++) {
+    let subject = subjectMarks[i].subject;
+    let total = calculateSubjectTotal(subjectMarks[i]);
+    const row = resultsTable.insertRow(-1);
+    row.insertCell(0).textContent = subject;
+    row.insertCell(1).textContent = total;
+  }
+
+  function calculateSubjectTotal(subject) {
+    let m1 = subject.m1;
+    let a1 = subject.a1;
+    let q1 = subject.q1;
+    let m2 = subject.m2;
+    let a2 = subject.a2;
+    let q2 = subject.q2;
+    let att = subject.att;
+
+    let val;
+    if (m1 > m2) {
+      val = (m1 * 0.8) + (m2 * 0.2);
+    } else {
+      val = (m1 * 0.2) + (m2 * 0.8);
+    }
+
+    let as1 = (a1 / 12) * 7;
+    let as2 = (a2 / 12) * 7;
+    let qu1 = (q1 / 12) * 7;
+    let qu2 = (q2 / 12) * 7;
+    let aq = Math.round((as1 + as2 + qu1 + qu2) / 4);
+
+    let total;
+    if (att >= 90) {
+      total = Math.round(val + aq + 5);
+    } else if (att >= 80 && att <= 89) {
+      total = Math.round(val + aq + 4);
+    } else if (att >= 70 && att <= 79) {
+      total = Math.round(val + aq + 3);
+    } else {
+      total = `MR/MISS is detained`;
+    }
+
+    return total;
+  }
+  createFallingPapers();
+
+  function createFallingPapers() {
+    const paperContainer = document.createElement('div');
+    paperContainer.style.position = 'absolute';
+    paperContainer.style.width = '100vw';
+    paperContainer.style.height = '100vh';
+    paperContainer.style.overflow = 'hidden';
+    paperContainer.style.pointerEvents = 'none';
+    document.body.appendChild(paperContainer);
+
+    for (let i = 0; i < 10; i++) {
+      const paper = document.createElement('div');
+      paper.classList.add('falling-paper');
+      paper.style.left = `${Math.random() * 100}vw`;
+      paper.style.top = `${Math.random() * 100}vh`;
+      paperContainer.appendChild(paper);
+    }
+  }
+</script>
+<footer>
+  <p>Created by NVN</p>
+</footer>
+
+</body>
+</html>
