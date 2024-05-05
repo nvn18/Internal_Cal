@@ -149,7 +149,7 @@ function changeSubjects() {
         }
     
     
-  } else if (branchSelect.value === 'CSD' || branchSelect.value === 'CSBS'||branchSelect.value === 'CSO'||branchSelect.value === 'IT'||branchSelect.value === 'EEE'||branchSelect.value === 'ECE'||branchSelect.value === 'CIVIL'||branchSelect.value === 'CHEMICAL'){
+  } else if (branchSelect.value === 'CSD' || branchSelect.value === 'CSBS'|| branchSelect.value === 'CSO'|| branchSelect.value === 'IT'|| branchSelect.value === 'EEE'|| branchSelect.value === 'ECE'|| branchSelect.value === 'CIVIL'|| branchSelect.value === 'CHEMICAL'){
     addOption(subjectSelect, '111');
       addOption(subjectSelect, '112');
       addOption(subjectSelect, '113');
