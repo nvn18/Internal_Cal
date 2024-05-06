@@ -130,12 +130,16 @@
     let total;
     if (att >= 90) {
       total = Math.round(val + aq + 5);
-    } else if (att >= 80 && att <= 89) {
+    } else if (att >= 80 && att <= 90) {
       total = Math.round(val + aq + 4);
-    } else if (att >= 70 && att <= 79) {
+    } else if (att >= 80 && att <= 85) {
       total = Math.round(val + aq + 3);
-    } else {
-      total = `MR/MISS is detained`;
+    } else if(att >=75 && att <=80){
+      total = Math.round(val+aq+2);
+    }
+    else
+    {
+      total = Math.round(val + aq + 0);
     }
 
     return total;
